@@ -43,28 +43,28 @@ function App(){
     return (
         <div className="w-full h-screen bg-slate-950 flex flex-col justify-start items-center">
 
-            <h1 className="text-white font-extrabold text-4xl italic uppercase my-5">Random Password Generator</h1>
+            <h1 className="text-white text-center font-extrabold text-2xl md:text-4xl italic uppercase my-5">Random Password Generator</h1>
 
-            <div className="bg-gray-800 px-6 py-8 flex flex-col md:w-2/5">
+            <div className="bg-gray-800 px-6 py-8 flex flex-col flex-wrap max-w-10/12 md:w-2/5 rounded-md shadow-lg shadow-gray-700">
                 <div>
-                    <input type="text" name="password" className="w-10/12 p-2 rounded-l outline-none" readOnly value={password} ref={passwordRef} />
-                    <button onClick={copyPassword} className="text-white bg-gray-600 w-2/12 p-2 rounded-r border border-gray-600 hover:bg-gray-700">Copy</button>
+                    <input type="text" name="password" className="w-9/12 p-2 rounded-l outline-none md:w-10/12" readOnly value={password} ref={passwordRef} />
+                    <button onClick={copyPassword} className="text-white bg-gray-600 w-3/12 p-2 rounded-r border border-gray-600 hover:bg-gray-700 md:w-2/12">Copy</button>
                 </div><br />
 
-                <div className="flex w-full justify-around">
+                <div className="flex flex-wrap w-full justify-around">
                     <div className="flex w-full md:w-6/12">
                         <input type="range" name="range" id="range" min={8} max={100} value={range} onChange={(e) => setRange(e.target.value)} className="cursor-pointer" />
-                        <label className="text-white mx-2 align-middle" htmlFor="range">Length ({range})</label>
+                        <label className="text-white mx-2 align-middle cursor-pointer" htmlFor="range">Length ({range})</label>
                     </div>
 
-                    <div className="flex w-full md:w-3/12">
+                    <div className="flex w-1/2  md:w-3/12">
                         <input type="checkbox" name="numbers" id="numbers" checked={number} onChange={() => {setNumber(prevNum => !prevNum);}} className="cursor-pointer" />
-                        <label className="text-white mx-2 align-middle" htmlFor="numbers">Numbers</label>
+                        <label className="text-white mx-2 align-middle cursor-pointer" htmlFor="numbers">Numbers</label>
                     </div>
 
-                    <div className="flex w-full md:w-3/12">
+                    <div className="flex w-1/2 md:w-3/12">
                         <input type="checkbox" name="characters" id="characters" onChange={() => setCharacters(prevChar => !prevChar)} className="cursor-pointer" />
-                        <label className="text-white mx-2 align-middle" htmlFor="characters">Characters</label>
+                        <label className="text-white mx-2 align-middle cursor-pointer" htmlFor="characters">Characters</label>
                     </div>
                 </div>
             </div>
