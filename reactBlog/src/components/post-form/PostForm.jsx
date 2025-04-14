@@ -3,7 +3,7 @@ import Select from "../Select";
 import Button from "../Button";
 import { useForm } from 'react-hook-form';
 import RTE from '../RTE';
-import {service as appwriteService} from '../../../appwrite/config';
+import appwriteService from '../../../appwrite/config';
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import { useCallback, useEffect } from 'react';
@@ -36,6 +36,7 @@ function PostForm({post}){
             const file = await appwriteService.uploadFile(data.image[0]);
             data.featuredImage = file.$id;
             const dbpost = await appwriteService.createPost({...data, userId: userData.$id});
+            console.log("Hello");
             if(dbpost){
                 navigate(`/post/${dbpost.$id}`);
             }
@@ -50,21 +51,21 @@ function PostForm({post}){
 
             return () => subscription.unsubscribe();
         }, [watch, slugTransform, setValue])
-
-        const slugTransform = useCallback(value => {
-            if(value && typeof value === "string" ){
-                return value.trim().toLocaleLowerCase().replace(/[^a-zA-Z\d\s]+/g, "-").replace(/\s/g, "-");
-            }
-            return "";
-        })
     }
+
+    const slugTransform = useCallback(value => {
+        if(value && typeof value === "string" ){
+            return value.trim().toLocaleLowerCase().replace(/[^a-zA-Z\d\s]+/g, "-").replace(/\s/g, "-");
+        }
+        return "";
+    })
 
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
             <div className="w-2/3 px-2">
                 <Input type="text" label="Title:" className="mb-4" {...register("title", {required:true})} />
                 <Input type="text" label="Slug:" className="mb-4" {...register("slug", {required:true})} onInput={(e) => setValue("slug", slugTransform(e.target.value), {shouldValidate:true})} />
-                <RTE name="content" label="Label:" defaultValue={getValues("content")} control={control} />
+                <RTE name="content" label="Content:" defaultValue={getValues("content")} control={control} />
             </div>
             <div className="w-1/3 px-2">
                 <Input label="Featured Image:" type="file" className="mb-4" accept="image/png, image/jpg, image/jpeg, image/gif" {...register("image", {required:!post})} />

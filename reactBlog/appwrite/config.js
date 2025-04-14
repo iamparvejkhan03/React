@@ -78,7 +78,7 @@ class Service{
 
     getFilePreview(fileId){
         try{
-            return this.storage.getFilePreview(conf.appWriteBucketId, fileId);
+            return this.storage.getFileView(conf.appWriteBucketId, fileId);
         }catch(error){
             throw error;
         }
