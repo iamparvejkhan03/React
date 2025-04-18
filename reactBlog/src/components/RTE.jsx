@@ -7,7 +7,7 @@ function RTE({name, control, label, defaultValue=""}){
             {label && <label className='inline-block mb-1 pl-1'>{label}</label>}
             <Controller name={name || 'content'} control={control} render={({field: {onChange}}) => {
                 return <Editor initialValue={defaultValue}
-                apiKey='do7on5l1sn43vl4919f12ghyuvj1r2dxc47t93pqfoly1enm'
+                apiKey='do7on5l1sn43vl4919f12ghyuuiyt4cvg8745vghdr68awsx58'
                 init={{
                     initialValue: defaultValue,
                     height: 500,
