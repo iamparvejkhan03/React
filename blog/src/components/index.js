@@ -7,6 +7,15 @@ import Input from './Input';
 import Contact from "./Contact";
 import Button from "./Button";
 import Textarea from "./Textarea";
+import Login from "./authentication/Login";
+import Register from "./authentication/Register";
+import Protected from "./Protected";
+import LogoutBtn from "./header/LogoutBtn";
+import RTE from "./RTE";
+import Select from "./Select";
+import PostForm from "./PostForm";
+import Profile from "./Profile";
+import Notification from "./authentication/Notification";
 
 export {
     Header,
@@ -18,4 +27,13 @@ export {
     Input,
     Contact,
     Textarea,
+    Login,
+    Register,
+    Protected,
+    LogoutBtn,
+    RTE,
+    Select,
+    PostForm,
+    Profile,
+    Notification,
 }

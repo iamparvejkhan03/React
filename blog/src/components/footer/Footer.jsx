@@ -21,6 +21,14 @@ function Footer(){
                         <Link to="#" className="text-white ml-1">@ParvejKhan</Link>
                     </p>
 
+                    <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+                        <NavLink to="/" className={({isActive}) => (isActive ? "mr-5 text-orange-500 hover:text-orange-700 font-semibold" : "mr-5 hover:text-gray-300")}>Home</NavLink>
+
+                        <NavLink to="/about" className={({isActive}) => (isActive ? "mr-5 text-orange-500 hover:text-orange-700" : "mr-5 hover:text-gray-300")}>About</NavLink>
+
+                        <NavLink to="/contact" className={({isActive}) => (isActive ? "mr-5 text-orange-500 hover:text-orange-700" : "mr-5 hover:text-gray-300")}>Contact</NavLink>
+                    </nav>
+
                     <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
                         <Link to="#" className="text-white text-lg ml-3"><i className="fa-brands fa-instagram"></i></Link>
                         <Link to="#" className="text-white text-lg ml-3"><i className="fa-brands fa-twitter"></i></Link>

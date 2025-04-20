@@ -3,7 +3,12 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {Home, AllPosts, AddPost} from "./pages/index.js";
+import {Home, AllPosts, AddPost, Login, Register, Post, EditPost, Profile} from "./pages/index.js";
+import store from "../store/store.js";
+import { Provider } from "react-redux";
+import {Protected} from "./components/";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor } from "../store/store.js";
 
 const router = createBrowserRouter([
     {
@@ -12,15 +17,55 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "",
-                element: <Home />
+                element: <Protected authentication={false}>
+                            <Home />
+                        </Protected>
             },
             {
                 path: "/all-posts",
-                element: <AllPosts />
+                element: <Protected authentication={false}>
+                            <AllPosts />
+                        </Protected>
             },
             {
                 path: "/add-post",
-                element: <AddPost />
+                element: (
+                    <Protected authentication>
+                        <AddPost />
+                    </Protected>
+                )
+            },
+            {
+                path: "/post/:slug",
+                element: (
+                    <Protected authentication={false}>
+                        <Post />
+                    </Protected>
+                )
+            },
+            {
+                path: "/edit-post/:slug",
+                element: (
+                    <Protected authentication>
+                        <EditPost />
+                    </Protected>
+                )
+            },
+            {
+                path: "/profile",
+                element: (
+                    <Protected authentication>
+                        <Profile />
+                    </Protected>
+                )
+            },
+            {
+                path: "/login",
+                element: <Login />
+            },
+            {
+                path: '/register',
+                element: <Register />
             }
         ],
     },
@@ -28,6 +73,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
-        <RouterProvider router={router} />
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <RouterProvider router={router} />
+            </PersistGate>
+        </Provider>
     </StrictMode>
 );

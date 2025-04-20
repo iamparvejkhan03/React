@@ -1,7 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
-import { Button, Container } from "..";
+import { Button, Container, LogoutBtn } from "..";
+import { useSelector } from "react-redux";
 
 function Header(){
+    const isLoggedIn = useSelector(state => state.auth.status);
     return (
         <header>
             <Container>
@@ -19,12 +21,21 @@ function Header(){
                         <NavLink to="/all-posts" className={({isActive}) => (isActive ? "mr-5 text-orange-500 hover:text-orange-700" : "mr-5 hover:text-gray-900")}>All Posts</NavLink>
 
                         <NavLink to="/add-post" className={({isActive}) => (isActive ? "mr-5 text-orange-500 hover:text-orange-700" : "mr-5 hover:text-gray-900")}>Add Post</NavLink>
+
+                        <NavLink to="/profile" className={({isActive}) => (isActive ? "mr-5 text-orange-500 hover:text-orange-700" : "mr-5 hover:text-gray-900")}>Profile</NavLink>
                     </nav>
                     
-                    <div className="md:min-w-1/6 md:flex md:justify-between">
-                        <Link to="/"><Button className="border rounded-sm py-2 px-5 hover:bg-gray-100 cursor-pointer">Log In <i className="fa-regular fa-user"></i></Button></Link>
-                        <Link to="/register"><Button>Register</Button></Link>
-                    </div>
+                    {
+                        isLoggedIn ? 
+                        <div className="md:min-w-1/6 md:flex md:justify-between">
+                            <LogoutBtn className="border rounded-sm py-2 px-5 hover:bg-gray-100 cursor-pointer">Log Out <i className="fas fa-sign-out"></i></LogoutBtn>
+                        </div> 
+                        :
+                        <div className="md:min-w-1/6 md:flex md:justify-between">
+                            <Link to="/login"><Button className="border rounded-sm py-2 px-5 hover:bg-gray-100 cursor-pointer">Log In <i className="fas fa-sign-in"></i></Button></Link>
+                            <Link to="/register"><Button>Register <i className="fa-regular fa-user"></i></Button></Link>
+                        </div>
+                    }
 
                 </div>
             </Container>
