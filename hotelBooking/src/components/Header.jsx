@@ -1,10 +1,20 @@
 import {assets} from '../assets/assets';
 import {Container, Button} from '.'
 import { Link, NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Header(){
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    const handleScroll = () => {
+        setIsScrolled(window.scrollY > 10);
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [])
 
     const navLinks = [
         {name: 'Home', path: '/'},
@@ -14,7 +24,7 @@ function Header(){
     ];
 
     return (
-        <header className="w-full fixed">
+        <header className={`w-full fixed transition-all duration-200 ${isScrolled && "bg-black"}`}>
             <Container classes="flex justify-between items-center">
                 <Link to="/" className='z-50'>
                     <img src={assets.logo} alt="logo" className={`h-7 lg:h-9 ${isMenuOpen && 'invert'} lg:invert-0`} />
@@ -28,7 +38,7 @@ function Header(){
                         {
                             navLinks.map((link) => (
                                 <li key={link.name}>
-                                    <NavLink to={link.path} className={"lg:text-white"}>{link.name}</NavLink>
+                                    <NavLink to={link.path} className={({isActive}) => `${isActive ? "text-blue-300" : "lg:text-white"}`}>{link.name}</NavLink>
                                 </li>
                             ))
                         }
