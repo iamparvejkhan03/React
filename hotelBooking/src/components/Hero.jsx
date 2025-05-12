@@ -16,7 +16,7 @@ function Hero(){
         setValue("destination", "");
         setValue("checkIn", "");
         setValue("checkOut", "");
-        setValue("guests", "");
+        setValue("guests", ""); 
     }
 
     return (

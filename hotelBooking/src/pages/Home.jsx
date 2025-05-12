@@ -1,9 +1,10 @@
-import { Container, Hero } from "../components";
+import { Container, Hero, FeaturedDestination } from "../components";
 
 function Home(){
     return (
         <main>
             <Hero />
+            <FeaturedDestination />
         </main>
     );
 }
