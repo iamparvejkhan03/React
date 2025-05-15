@@ -16,16 +16,15 @@ function Header(){
     const navigate = useNavigate();
     const location = useLocation();
 
-    const handleScroll = () => {
-        setIsScrolled(window.scrollY > 10);
-    }
-
     useEffect(() => {
-        if(location.pathname !== "/") setIsScrolled(true);
+        const handleScroll = () => {
+            if(location.pathname === "/") setIsScrolled(window.scrollY > 10);
+        }
 
         window.addEventListener("scroll", handleScroll);
+        if(location.pathname !== "/") setIsScrolled(true);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [])
+    }, [location.pathname])
 
     const navLinks = [
         {name: 'Home', path: '/'},
@@ -35,7 +34,7 @@ function Header(){
     ];
 
     return (
-        <header className={`w-full fixed transition-all duration-200 z-50 ${isScrolled && "bg-white shadow-[0px_2px_10px_rgba(0,0,0,0.5)]"}`}>
+        <header className={`w-full fixed transition-all duration-200 z-50 ${isScrolled && "bg-white/95 shadow-[0px_2px_5px_rgba(0,0,0,0.5)]"}`}>
             <Container classes="flex justify-between items-center">
                 <Link to="/" className='z-50'>
                     <img src={assets.logo} alt="logo" className={`h-7 lg:h-9 ${(isMenuOpen || isScrolled) && 'invert'}`} />
@@ -49,7 +48,7 @@ function Header(){
                         {
                             navLinks.map((link) => (
                                 <li key={link.name}>
-                                    <NavLink to={link.path} className={({isActive}) => `${isActive ? "text-blue-300" : isScrolled ? "lg:text-black" : "lg:text-white"}`}>{link.name}</NavLink>
+                                    <NavLink to={link.path} className={({isActive}) => `py-2 relative after:content-[''] after:w-0 after:h-[2px] after:absolute after:bottom-0 after:left-0 after:rounded-full after:transition-w after:duration-200 hover:after:w-full ${isActive ? "text-blue-300 after:bg-blue-300" : isScrolled ? "lg:text-black after:bg-black" : "lg:text-white after:bg-white"}`}>{link.name}</NavLink>
                                 </li>
                             ))
                         }

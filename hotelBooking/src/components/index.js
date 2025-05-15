@@ -7,6 +7,12 @@ import Input from "./Input";
 import HotelCard from "./HotelCard";
 import FeaturedDestination from "./FeaturedDestination";
 import Heading from "./Heading";
+import ExclusiveOffers from "./ExclusiveOffers";
+import OfferCard from "./OfferCard";
+import Testimonials from "./Testimonials";
+import TestimonialCard from "./TestimonialCard";
+import Newsletter from "./Newsletter";
+import RoomCard from "./RoomCard";
 
 export {
     Footer,
@@ -18,4 +24,10 @@ export {
     HotelCard,
     FeaturedDestination,
     Heading,
+    ExclusiveOffers,
+    OfferCard,
+    Testimonials,
+    TestimonialCard,
+    Newsletter,
+    RoomCard,
 }

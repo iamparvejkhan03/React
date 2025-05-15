@@ -1,24 +1,26 @@
-import {HotelCard, Container, Heading} from "./";
+import {HotelCard, Container, Heading, Button} from "./";
 import { roomsDummyData } from "../assets/assets";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
+import { Pagination, A11y, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import { useNavigate } from "react-router-dom";
 
 function FeaturedDestination(){
+    const navigate = useNavigate();
+
     return (
-        <section>
-            <Container>
-                <Heading classes="text-xl inline-block relative md:text-2xl my-3 ">Featuted Destination</Heading>
-                <div className="w-full flexflex-row gap-10">
+        <section className="bg-[#eeeeee]">
+            <Container classes="flex flex-col justify-center">
+                <Heading classes="" subTitle="Discover our handpicked selection of exceptional properties around the world, offering unparalleled luxury and unforgotable experience.">Featured Destination</Heading>
+                <div className="w-full flex-row gap-10">
                     <Swiper
                         spaceBetween={50}
-                        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+                        modules={[Pagination, A11y, Autoplay]}
                         pagination={{ clickable: true }}
                         breakpoints={{
                             0: {slidesPerView:1},
-                            799: {slidesPerView:2},
+                            768: {slidesPerView:2},
                             1099:{slidesPerView:3},
                             1399: {slidesPerView:4}
                         }}
@@ -33,6 +35,8 @@ function FeaturedDestination(){
                     }
                     </Swiper>
                 </div>
+
+                <Button onClick={() => navigate('/rooms')} classes=" my-5 self-center">View All Destinations</Button>
             </Container>
         </section>
     );
