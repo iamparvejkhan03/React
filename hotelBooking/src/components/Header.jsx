@@ -22,7 +22,11 @@ function Header(){
         }
 
         window.addEventListener("scroll", handleScroll);
-        if(location.pathname !== "/") setIsScrolled(true);
+        if(location.pathname !== "/"){
+            setIsScrolled(true);
+        }else{
+            setIsScrolled(false);
+        }
         return () => window.removeEventListener("scroll", handleScroll);
     }, [location.pathname])
 
@@ -40,10 +44,10 @@ function Header(){
                     <img src={assets.logo} alt="logo" className={`h-7 lg:h-9 ${(isMenuOpen || isScrolled) && 'invert'}`} />
                 </Link>
 
-                <nav className={`w-0 ${isMenuOpen && 'absolute top-0 left-0 w-full h-[100vh] flex justify-center items-center bg-white'} transition-w duration-300 lg:block lg:w-auto lg:bg-transparent lg:static`}>
+                <nav className={`w-0 transition-w duration-300 ${isMenuOpen && 'absolute top-0 left-0 w-full h-[100vh] flex justify-center items-center bg-white'} lg:block lg:w-auto lg:bg-transparent lg:static`}>
                     <ul className={`${isMenuOpen ? 'flex flex-col text-center' : 'hidden'} lg:flex lg:text-left lg:flex-row lg:items-center lg:gap-x-10 gap-y-6 lg:gap-y-0`}>
                         {
-                            isMenuOpen && <img onClick={() => setIsMenuOpen(!isMenuOpen)} src={assets.closeMenu} className='h-7 lg:hidden absolute top-0 right-0 -translate-x-1/2 translate-y-1/2 cursor-pointer' />
+                            isMenuOpen && <img onClick={() => setIsMenuOpen(!isMenuOpen)} src={assets.closeMenu} className='h-8 lg:hidden absolute top-0 right-0 -translate-x-1/2 translate-y-3/5 cursor-pointer' />
                         }
                         {
                             navLinks.map((link) => (
@@ -77,7 +81,7 @@ function Header(){
                                             <UserButton.Action onClick={() => navigate("/my-bookings")} label="My Booking" labelIcon={element} />
                                         </UserButton.MenuItems>
                                     </UserButton>}
-                    <img onClick={() => setIsMenuOpen(!isMenuOpen)} src={assets.menuIcon} alt="menu-icon" className={`h-5 cursor-pointer ${isScrolled && 'invert'}`} />
+                    <img onClick={() => setIsMenuOpen(!isMenuOpen)} src={assets.menuIcon} alt="menu-icon" className={`h-5 cursor-pointer ${isScrolled && !isMenuOpen ? 'invert' : ""}`} />
                 </div>
             </Container>
         </header>

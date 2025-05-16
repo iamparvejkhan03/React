@@ -30,7 +30,7 @@ function AllRooms(){
     const [isFiltersHidden, setIsFiltersHidden] = useState(true);
 
     return (
-        <main className="min-h-[70vh] py-24">
+        <main className="min-h-[70vh] pt-24">
             <Container classes="flex flex-col items-start lg:flex-row lg:justify-between">        
                 <section className="lg:max-w-8/12 order-2 lg:order-1">
                     <Heading subTitle="Take advantage of our limited-time offer and special packages to enhance your stay and create unforgettable memories.">Hotel Rooms</Heading>

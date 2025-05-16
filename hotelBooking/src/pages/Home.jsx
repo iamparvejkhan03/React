@@ -1,4 +1,4 @@
-import { Container, Hero, FeaturedDestination, ExclusiveOffers, Testimonials, Newsletter } from "../components";
+import { Hero, FeaturedDestination, ExclusiveOffers, Testimonials, Newsletter } from "../components";
 
 function Home(){
     return (

@@ -13,6 +13,7 @@ import Testimonials from "./Testimonials";
 import TestimonialCard from "./TestimonialCard";
 import Newsletter from "./Newsletter";
 import RoomCard from "./RoomCard";
+import ScrollToTop from "./ScrollToTop";
 
 export {
     Footer,
@@ -30,4 +31,5 @@ export {
     TestimonialCard,
     Newsletter,
     RoomCard,
+    ScrollToTop,
 }
