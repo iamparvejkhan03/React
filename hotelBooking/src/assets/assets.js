@@ -222,7 +222,7 @@ export const userBookingsDummyData = [
         "checkInDate": "2025-04-27T00:00:00.000Z",
         "checkOutDate": "2025-04-28T00:00:00.000Z",
         "totalPrice": 399,
-        "guests": 1,
+        "guests": 2,
         "status": "pending",
         "paymentMethod": "Pay At Hotel",
         "isPaid": false,

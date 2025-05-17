@@ -5,7 +5,7 @@ const Input = forwardRef(function Input({type="text", inputClasses="", label, la
 
     return (
         <>
-            {label && <label htmlFor={id} className={labelClasses}>{labelIconClasses && <i className={labelIconClasses}></i>}&nbsp; &nbsp;{label}</label>}
+            {label && <label htmlFor={id} className={labelClasses}>{labelIconClasses && <i className={`mr-1 ${labelIconClasses}`}></i>}{label}</label>}
 
             <input type={type} className={inputClasses} ref={ref} id={id} {...props}  />
         </>

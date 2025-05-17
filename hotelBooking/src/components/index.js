@@ -14,6 +14,7 @@ import TestimonialCard from "./TestimonialCard";
 import Newsletter from "./Newsletter";
 import RoomCard from "./RoomCard";
 import ScrollToTop from "./ScrollToTop";
+import HotelRegistrationForm from "./HotelRegistrationForm";
 
 export {
     Footer,
@@ -32,4 +33,5 @@ export {
     Newsletter,
     RoomCard,
     ScrollToTop,
+    HotelRegistrationForm,
 }

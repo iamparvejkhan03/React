@@ -1,8 +1,10 @@
 import Home from "./Home";
-import Owner from "./Owner";
+import Owner from "./owner/Owner";
 import MyBookings from "./MyBookings";
 import AllRooms from "./AllRooms";
 import Room from "./Room";
+import Header from "./owner/Header";
+import Sidebar from "./owner/Sidebar";
 
 export {
     Home,
@@ -10,4 +12,6 @@ export {
     MyBookings,
     AllRooms,
     Room,
+    Header,
+    Sidebar,
 }
