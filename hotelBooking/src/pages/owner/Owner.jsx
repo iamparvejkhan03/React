@@ -1,11 +1,14 @@
 import { Outlet } from 'react-router-dom';
-import { Header } from '../index'
+import { Header, Sidebar } from '../index'
 
 function Owner(){
     return (
         <>
             <Header />
-            <Outlet />
+            <main className='min-h-[70vh] py-19 flex'>
+                <Sidebar />
+                <Outlet />
+            </main>
         </>
     );
 }

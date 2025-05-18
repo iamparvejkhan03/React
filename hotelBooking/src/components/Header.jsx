@@ -56,7 +56,7 @@ function Header(){
                                 </li>
                             ))
                         }
-                        {isSignedIn && <li><Button onClick={() => navigate("/owner")} classes={`${!isScrolled && 'lg:text-white lg:border-white'} border text-sm border-black px-3 py-1 rounded-full cursor-pointer`}>Dashboard</Button></li>}
+                        {isSignedIn && <li><Button onClick={() => navigate("/owner/dashboard")} classes={`${!isScrolled && 'lg:text-white lg:border-white'} border text-sm border-black px-3 py-1 rounded-full cursor-pointer`}>Dashboard</Button></li>}
                         {
                             (isMenuOpen && !isSignedIn) && <Button onClick={openSignIn} classes='inline text-white bg-black border border-black px-3 py-1 rounded-full lg:hidden cursor-pointer'>Login</Button>
                         }

@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {Home, Owner, MyBookings, AllRooms, Room} from './pages';
+import {Home, Owner, MyBookings, AllRooms, Room, Dashboard, AddRoom, ListRoom} from './pages';
 import conf from './conf/conf.js';
 import { ClerkProvider } from "@clerk/clerk-react";
 
@@ -15,10 +15,6 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Home />
-            },
-            {
-                path: "/owner",
-                element: <Owner />
             },
             {
                 path: "/my-bookings",
@@ -35,7 +31,26 @@ const router = createBrowserRouter([
             {
                 path: "/room/:id",
                 element: <Room />
-            }
+            },
+            {
+                path: "/owner",
+                element: <Owner />,
+                children: [
+                    {
+                        path: "/owner/dashboard",
+                        element: <Dashboard />,
+                        index:true
+                    },
+                    {
+                        path: "/owner/add-room",
+                        element: <AddRoom /> 
+                    },
+                    {
+                        path: "/owner/list-room",
+                        element: <ListRoom /> 
+                    }
+                ]
+            },
         ]
     }
 ]);

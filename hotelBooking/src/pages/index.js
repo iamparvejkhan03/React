@@ -5,6 +5,10 @@ import AllRooms from "./AllRooms";
 import Room from "./Room";
 import Header from "./owner/Header";
 import Sidebar from "./owner/Sidebar";
+import Dashboard from "./owner/Dashboard";
+import AddRoom from "./owner/AddRoom";
+import ListRoom from "./owner/ListRoom";
+import Container from "./owner/Container";
 
 export {
     Home,
@@ -14,4 +18,8 @@ export {
     Room,
     Header,
     Sidebar,
+    Dashboard,
+    AddRoom,
+    ListRoom,
+    Container,
 }
