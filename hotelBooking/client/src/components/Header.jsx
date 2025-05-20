@@ -72,7 +72,7 @@ function Header(){
                             </UserButton.MenuItems>
                         </UserButton> : 
                         
-                        <Button onClick={openSignIn} classes='inline text-white bg-black border border-black px-8 py-2 rounded-full cursor-pointer'>Login</Button>}
+                        <button onClick={openSignIn} className='inline text-white bg-black border border-black px-8 py-2 rounded-full cursor-pointer hover:bg-black/80'>Login</button>}
                 </div>
 
                 <div className='lg:hidden flex items-center gap-4'>
