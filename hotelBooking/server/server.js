@@ -4,6 +4,7 @@ import "dotenv/config";
 import dbConnect from './config/db.js';
 import { clerkMiddleware } from '@clerk/express';
 import clerkWebhooks from './controllers/clerkWebhooks.js';
+import userRouter from './routes/userRouter.js';
 
 dbConnect();
 
@@ -14,6 +15,8 @@ app.use(clerkMiddleware());
 app.use(express.json());
 
 app.use('/api/clerk', clerkWebhooks);
+
+app.use('/api/user', userRouter);
 
 app.get('/', (req, res) => res.send("API is working smoothly."));
 
