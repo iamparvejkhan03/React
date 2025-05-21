@@ -12,13 +12,13 @@ export const getUserData = (req, res) => {
 
 export const storeRecentSearchedCities = async (req, res) => {
     try {
-        const {recentSearchedCy} = req.body;
+        const {recentSearchedCity} = req.body;
         const user = await req.user;
         if(user.recentSearchedCities.length < 3){
-            user.recentSearchedCities.push(recentSearchedCy);
+            user.recentSearchedCities.push(recentSearchedCity);
         }else{
             user.recentSearchedCities.shift();
-            user.recentSearchedCities.push(recentSearchedCy);
+            user.recentSearchedCities.push(recentSearchedCity);
         }
         await user.save();
         res.json({success:true, message:"City saved"});

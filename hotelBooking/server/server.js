@@ -4,9 +4,13 @@ import "dotenv/config";
 import dbConnect from './config/db.js';
 import { clerkMiddleware } from '@clerk/express';
 import clerkWebhooks from './controllers/clerkWebhooks.js';
-import userRouter from './routes/userRouter.js';
+import userRouter from './routes/userRoutes.js';
+import hotelRouter from './routes/hotelRoutes.js';
+import roomRouter from './routes/roomRoutes.js';
+import cloudinaryConfiguration from './config/cloudinary.js';
 
 dbConnect();
+cloudinaryConfiguration();
 
 const app = express();
 
@@ -17,6 +21,10 @@ app.use(express.json());
 app.use('/api/clerk', clerkWebhooks);
 
 app.use('/api/user', userRouter);
+
+app.use('/api/hotel', hotelRouter);
+
+app.use('/api/room', roomRouter);
 
 app.get('/', (req, res) => res.send("API is working smoothly."));
 
