@@ -8,6 +8,7 @@ import userRouter from './routes/userRoutes.js';
 import hotelRouter from './routes/hotelRoutes.js';
 import roomRouter from './routes/roomRoutes.js';
 import cloudinaryConfiguration from './config/cloudinary.js';
+import bookingRouter from './routes/bookingRoutes.js';
 
 dbConnect();
 cloudinaryConfiguration();
@@ -22,9 +23,11 @@ app.use('/api/clerk', clerkWebhooks);
 
 app.use('/api/user', userRouter);
 
-app.use('/api/hotel', hotelRouter);
+app.use('/api/hotels', hotelRouter);
 
-app.use('/api/room', roomRouter);
+app.use('/api/rooms', roomRouter);
+
+app.use('/api/bookings', bookingRouter);
 
 app.get('/', (req, res) => res.send("API is working smoothly."));
 
