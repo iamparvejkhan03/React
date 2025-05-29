@@ -1,6 +1,8 @@
 import {Container, Heading, RoomCard} from "../components";
 import { roomsDummyData } from "../assets/assets";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppContext } from "../context/AppContext";
+import { useSearchParams } from "react-router-dom";
 
 function CheckBox({label}){
     return (
@@ -28,6 +30,18 @@ const sortOptions = ['Price Low to High', 'Price High to Low', 'Newest First'];
 
 function AllRooms(){
     const [isFiltersHidden, setIsFiltersHidden] = useState(true);
+    const { rooms, setRooms } = useAppContext();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const filterDestination = (room) => {
+        const destination = searchParams.get('destination');
+        if(!destination) return true;
+        return room.hotel.city.toLowerCase().includes(destination.toLowerCase());
+    }
+
+    const filteredRooms = () => {
+        return rooms.filter(room => filterDestination(room));
+    }
 
     return (
         <main className="min-h-[70vh] pt-24">
@@ -35,7 +49,7 @@ function AllRooms(){
                 <section className="lg:max-w-8/12 order-2 lg:order-1">
                     <Heading subTitle="Take advantage of our limited-time offer and special packages to enhance your stay and create unforgettable memories.">Hotel Rooms</Heading>
                     {
-                        roomsDummyData.map(room => (
+                        filteredRooms().map(room => (
                             <RoomCard key={room._id} room={room} />
                         ))
                     }

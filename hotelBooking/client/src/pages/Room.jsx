@@ -1,35 +1,73 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { assets, roomsDummyData, facilityIcons, roomCommonData, testimonials } from "../assets/assets";
 import { Button, Container, Heading, Input } from "../components";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAppContext } from "../context/AppContext";
+import { toast } from "react-hot-toast";
 
 function Room(){
     const {id} = useParams();
     const [room, setRoom] = useState(null);
     const [mainImage, setMainImage] = useState(null);
+    const { axios, rooms, getToken, user } = useAppContext();
+    const [isAvailable, setIsAvailable] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const room = roomsDummyData.find(room => room._id === id);
-        setRoom(room);
-        setMainImage(room.images[0]);
-    }, [])
+        const roomById = rooms.find(room => room._id === id);
+        roomById && setRoom(roomById);
+        roomById && setMainImage(roomById.images[0]);
+    }, [rooms])
 
-    const {register, handleSubmit, setValue, formState: {errors}} = useForm({
+    const {register, handleSubmit, setValue, getValues, formState: {errors}} = useForm({
             defaultValues: {
                 checkIn: "",
                 checkOut: "",
                 guests: "",
             }
-        });
+    });
+
+    const checkAvailability = async () => {
+        const {data} = await axios.post('/api/bookings/check-room-availability', {room: id, checkInDate: getValues('checkIn'), checkOutDate: getValues('checkOut')});
+
+        if(data.success){
+            setIsAvailable(true);
+            toast.success(data.message);
+        }else{
+            setIsAvailable(false);
+            toast.error(data.message);
+        }
+    }
+
+    useEffect(() => {
+        checkAvailability();
+    }, [id])
     
-    const handleFormSubmit = (data) => {
-        setValue("checkIn", "");
-        setValue("checkOut", "");
-        setValue("guests", ""); 
+    const handleFormSubmit = async (formData) => {
+        try{
+            if(!isAvailable){
+                checkAvailability();
+                return;
+            }
+            const { data } = await axios.post('/api/bookings/create', {room:id, checkInDate:formData.checkIn, checkOutDate:formData.checkOut, guests:formData.guests}, {headers: {Authorization: `Bearer ${await getToken()}`}});
+
+            if(data.success){
+                navigate('/my-bookings')
+                toast.success(data.message);
+            }else{
+                toast.error(data.message);
+            }
+        }catch(error){
+            toast.error(error.message);
+        }finally{
+            setValue("checkIn", "");
+            setValue("checkOut", "");
+            setValue("guests", ""); 
+        }
     }
     
-    return (
+    return (room &&
         <main className="min-h-[70vh] pt-24">
             {room && (
                 <Container>
@@ -98,7 +136,7 @@ function Room(){
                             {errors.guests && <p className="text-red-500 text-sm ">No. of guests is required!</p>}
                         </div>
 
-                        <Input type="submit" value="Book Now" inputClasses="text-white bg-black py-1.5 px-5 rounded order-5 my-2 grow" />
+                        <Input type="submit" value={isAvailable ? `Book Now` : 'Check Availability'} inputClasses="text-white bg-black py-1.5 px-5 rounded order-5 my-2 cursor-pointer grow" />
                     </form>
 
                     {/* Room features section */}
@@ -145,7 +183,7 @@ function Room(){
                                     <p>Response rate: 100%</p>
                                     <p>Response time: 30 min</p>
                                 </div>
-                                <button className="border-2 border-gray-200 rounded py-2 px-4 cursor-pointer bg-blue-600 text-white px-8 text-sm my-3 hover:bg-blue-600/90">Contact Now</button>
+                                <button className="border-2 border-gray-200 rounded py-2 px-4 cursor-pointer bg-blue-600 text-white text-sm my-3 hover:bg-blue-600/90">Contact Now</button>
                             </div>
                         </div>
                     </section>

@@ -8,14 +8,27 @@ import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useEffect, useState } from "react";
 
-function FeaturedDestination(){
+function RecommendedHotels(){
     const navigate = useNavigate();
-    const { rooms } = useAppContext(); 
+    const { rooms, seachedCities } = useAppContext();
+    const [recommended, setRecommended] = useState([]);
+    
+    const filterRooms = () => {
+        const filteredRooms = rooms.filter((room) => {
+            return seachedCities.includes(room.hotel.city);
+        })
 
-    return rooms.length > 0 && (
+        return (filteredRooms);
+    }
+
+    useEffect(() => {
+        filterRooms();
+    }, [rooms])
+
+    return filterRooms().length > 0 && (
         <section className="bg-[#eeeeee]">
             <Container classes="flex flex-col justify-center">
-                <Heading classes="" subTitle="Discover our handpicked selection of exceptional properties around the world, offering unparalleled luxury and unforgotable experience.">Featured Destination</Heading>
+                <Heading classes="" subTitle="Discover our handpicked selection of exceptional properties in your recent searched cities, offering unparalleled luxury and unforgotable experience.">Recommended Hotels</Heading>
                 <div className="w-full flex-row gap-10">
                     <Swiper
                         spaceBetween={50}
@@ -32,17 +45,17 @@ function FeaturedDestination(){
                         loop
                     >
                     {
-                        rooms.map((room, index) => (
+                        filterRooms().map((room, index) => (
                             <SwiperSlide><HotelCard index={index} room={room} key={room._id} /></SwiperSlide>
                         ))
                     }
                     </Swiper>
                 </div>
 
-                <Button onClick={() => navigate('/rooms')} classes=" my-5 self-center">View All Destinations</Button>
+                <Button onClick={() => navigate('/rooms')} classes=" my-5 self-center">View All Recommendation</Button>
             </Container>
         </section>
     );
 }
 
-export default FeaturedDestination;
+export default RecommendedHotels;

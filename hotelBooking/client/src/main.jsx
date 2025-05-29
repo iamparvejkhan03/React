@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {Home, Owner, MyBookings, AllRooms, Room, Dashboard, AddRoom, ListRoom} from './pages';
 import conf from './conf/conf.js';
 import { ClerkProvider } from "@clerk/clerk-react";
+import { AppContextProvider } from './context/AppContext';
 
 const router = createBrowserRouter([
     {
@@ -62,7 +63,9 @@ if(!clerkPublishableKey) throw new Error("Clerk PK missing!");
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <ClerkProvider publishableKey={clerkPublishableKey} afterSignOutUrl='/'>
-            <RouterProvider router={router} />
+            <AppContextProvider>
+                <RouterProvider router={router} />
+            </AppContextProvider>
         </ClerkProvider>
     </StrictMode>
 );

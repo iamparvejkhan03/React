@@ -6,15 +6,16 @@ import { useClerk, useUser, UserButton } from '@clerk/clerk-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAppContext } from '../context/AppContext';
 
 function Header(){
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const {openSignIn} = useClerk();
-    const {user, isSignedIn} = useUser();
     const element = <FontAwesomeIcon icon={faBook} />
-    const navigate = useNavigate();
     const location = useLocation();
+    const navigate = useNavigate();
+    const { user, isOwner, setShowHotelRegForm } = useAppContext();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -56,16 +57,16 @@ function Header(){
                                 </li>
                             ))
                         }
-                        {isSignedIn && <li><Button onClick={() => navigate("/owner/dashboard")} classes={`${!isScrolled && 'lg:text-white lg:border-white'} border text-sm border-black px-3 py-1 rounded-full cursor-pointer`}>Dashboard</Button></li>}
+                        {user && <li><Button onClick={() => isOwner ? navigate("/owner/dashboard") : setShowHotelRegForm(true)} classes={`${!isScrolled && 'lg:text-white lg:border-white'} border text-sm border-black px-3 py-1 rounded-full cursor-pointer`}>{isOwner ? 'Dashboard' : 'List Your Hotel'}</Button></li>}
                         {
-                            (isMenuOpen && !isSignedIn) && <Button onClick={openSignIn} classes='inline text-white bg-black border border-black px-3 py-1 rounded-full lg:hidden cursor-pointer'>Login</Button>
+                            (isMenuOpen && !user) && <Button onClick={openSignIn} classes='inline text-white bg-black border border-black px-3 py-1 rounded-full lg:hidden cursor-pointer'>Login</Button>
                         }
                     </ul>
                 </nav>
 
                 <div className='lg:flex lg:gap-x-10 lg:items-center hidden'>
                     <img src={assets.searchIcon} alt="search-icon" className={`h-7 ${isScrolled && 'invert'}`} />
-                    {isSignedIn ?
+                    {user ?
                         <UserButton>
                             <UserButton.MenuItems>
                                 <UserButton.Action onClick={() => navigate("/my-bookings")} label="My Booking" labelIcon={element} />
@@ -76,7 +77,7 @@ function Header(){
                 </div>
 
                 <div className='lg:hidden flex items-center gap-4'>
-                    {isSignedIn && <UserButton>
+                    {user && <UserButton>
                                         <UserButton.MenuItems>
                                             <UserButton.Action onClick={() => navigate("/my-bookings")} label="My Booking" labelIcon={element} />
                                         </UserButton.MenuItems>

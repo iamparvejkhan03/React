@@ -1,8 +1,33 @@
 import { Button, Container, Heading } from "../components";
 import { assets, userBookingsDummyData } from "../assets/assets";
+import { useAppContext } from "../context/AppContext";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 function MyBookings(){
-    return (
+    const {axios, getToken}  = useAppContext();
+    const [userBookings, setUserBookings] = useState([]);
+
+    const fetchUserBookings = async () => {
+        try {
+            const {data} = await axios.get('/api/bookings/user-bookings', {headers: {Authorization: `Bearer ${await getToken()}`}});
+
+            if(data.success){
+                setUserBookings(data.message);
+            }else{
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
+
+    useEffect(() => {
+        fetchUserBookings();
+    }, [userBookings])
+
+    return (userBookings &&
         <main className="min-h-[70vh] pt-24">
             <Container>
                 <Heading subTitle="Easily manage your past, current, and future hotel reservations in one place. Plan your trips seamlessly with just a few clicks.">My Bookings</Heading>
@@ -14,7 +39,7 @@ function MyBookings(){
                         <div className="">Payments</div>
                     </div>
                     {
-                        userBookingsDummyData.map(booking => (
+                        userBookings.map(booking => (
                             <div key={booking._id} className="grid grid-cols-[1fr] md:grid-cols-[3fr_2fr_1fr] md:items-center border-b-2 border-gray-300/50">
                                 <div className="flex flex-col sm:flex-row gap-3 md:gap-5 md:items-center py-4">
                                     <img className="sm:h-28 rounded object-cover" src={booking.room.images[0]} alt="room-image" />

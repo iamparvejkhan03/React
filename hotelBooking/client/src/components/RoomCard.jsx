@@ -21,7 +21,7 @@ function RoomCard({room}){
                 <div className="flex gap-2 flex-wrap my-3 lg:my-0">
                     {
                         room.amenities.map((amenity, index) => (
-                            <span key={index} className="text-sm bg-gray-300/50 p-2 rounded"><img className="inline-block" src={facilityIcons[amenity]} alt={`Free ${amenity}`} /> {amenity}</span>
+                            <span key={index} className="text-sm bg-gray-300/50 p-2 rounded"><img className="inline-block" src={facilityIcons[amenity]} alt={`${amenity}`} /> {amenity}</span>
                         ))
                     }
                 </div>

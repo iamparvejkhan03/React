@@ -1,10 +1,11 @@
-import { Hero, FeaturedDestination, ExclusiveOffers, Testimonials, Newsletter } from "../components";
+import { Hero, FeaturedDestination, RecommendedHotels, ExclusiveOffers, Testimonials, Newsletter } from "../components";
 
 function Home(){
     return (
         <main className="min-h-[70vh]">
             <Hero />
             <FeaturedDestination />
+            <RecommendedHotels />
             <ExclusiveOffers />
             <Testimonials />
             <Newsletter />

@@ -6,6 +6,7 @@ import Hero from "./Hero";
 import Input from "./Input";
 import HotelCard from "./HotelCard";
 import FeaturedDestination from "./FeaturedDestination";
+import RecommendedHotels from "./RecommendedHotels";
 import Heading from "./Heading";
 import ExclusiveOffers from "./ExclusiveOffers";
 import OfferCard from "./OfferCard";
@@ -25,6 +26,7 @@ export {
     Input,
     HotelCard,
     FeaturedDestination,
+    RecommendedHotels,
     Heading,
     ExclusiveOffers,
     OfferCard,
