@@ -15,7 +15,11 @@ cloudinaryConfiguration();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://quickstay-pi.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 app.use(clerkMiddleware());
 app.use(express.json());
 
