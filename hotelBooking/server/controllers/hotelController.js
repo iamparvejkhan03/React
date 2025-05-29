@@ -21,7 +21,7 @@ const registerHotel = async (req, res) => {
 
         await User.findByIdAndUpdate(owner, {role: "hotelOwner"});
 
-        res.json({success:true, message:"Hotel Saved."});
+        res.json({success:true, message:"Hotel Registered."});
     } catch (error) {
         res.json({success:false, message:error.message});
     }

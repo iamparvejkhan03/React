@@ -29,10 +29,10 @@ const createRoom = async (req, res) => {
     }
 }
 
-//API to find all the rooms in a specific hotel
+//API to find all the rooms in a specific hotel 
 const getHotelRooms = async (req, res) => {
     try {
-        const { hotel } = await Hotel.find({owner: req.auth.userId});
+        const hotel = await Hotel.findOne({owner: req.auth.userId});
 
         const allRooms = await Room.find({hotel:hotel._id.toString()}).populate("hotel");
 
@@ -62,9 +62,10 @@ const getRooms = async (req, res) => {
 //API to toggle the room availability
 const toggleRoomAvailability = async (req, res) => {
     try {
-        const { roomId } = req.body;
+        const { roomId } = req.body; 
+        const { toggle } = req.body;
 
-        await Room.findByIdAndUpdate(roomId, {isAvailable: !isAvailable});
+        await Room.findByIdAndUpdate(roomId, {isAvailable: toggle});
 
         res.json({success:true, message:"Room availability updated."});
     } catch (error) {

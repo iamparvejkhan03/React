@@ -1,18 +1,19 @@
 import Room from "../models/room.js";
 import Booking from "../models/booking.js";
 import Hotel from "../models/hotel.js";
+import transporter from "../config/nodemailer.js";
 
 //API to create a booking
 //Endpoint: post, /api/bookings/create
 const createBooking = async (req, res) => {
     try {
-        const { room, checkInDate, checkOutDate, guests, status, paymentMethod, isPaid } = req.body;
+        const { room, checkInDate, checkOutDate, guests } = req.body;
 
         const user = req.user._id;
 
         const roomData = await Room.findById(room).populate("hotel");
 
-        const roomAvailability = await checkRoomAvailability(req.body);
+        const roomAvailability = await isRoomAvailable(req.body);
 
         if(!roomAvailability) return res.json({success:false, message:"Room not available."});
 
@@ -28,7 +29,30 @@ const createBooking = async (req, res) => {
             user, room, hotel: roomData.hotel._id, checkInDate, checkOutDate, totalPrice: +totalPrice, guests: +guests
         }
 
-        await Booking.create(bookingData);
+        const booking = await Booking.create(bookingData);
+
+        if(booking){
+            const mailOptions = {
+                from: process.env.SENDER_EMAIL,
+                to: req.user.email,
+                subject: "Hotel Booking Details",
+                html: `
+                    <h2>Your Booking Details</h2>
+                    <p>Dear ${req.user.username}</p>
+                    <p>Thank you for your booking! Here are your details:</p>
+                    <ul>
+                        <li><strong>Booking ID</strong>: ${booking._id}</li>
+                        <li><strong>Hotel Name</strong>: ${roomData.hotel.name}</li>
+                        <li><strong>Location</strong>: ${roomData.hotel.address}</li>
+                        <li><strong>Date</strong>: ${checkInDate} - ${checkOutDate}</li>
+                        <li><strong>Amount</strong>:$${totalPrice}</li>
+                    </ul>
+                    <p>We look forward to welcoming you!</p>
+                    <p>If you need to make any changes, feel free to contact us.</p>
+                `
+            }
+            await transporter.sendMail(mailOptions);
+        }
 
         res.json({success:true, message:"Booking created."});
     } catch (error) {
